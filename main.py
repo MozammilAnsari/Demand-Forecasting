@@ -113,10 +113,6 @@ def main():
             file_name='sample_data.csv',
             mime='text/csv',
         )
-
-
-        st.set_option('deprecation.showPyplotGlobalUse', False)
-        showPyplotGlobalUse = false
         
 
 
