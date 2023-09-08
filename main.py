@@ -75,11 +75,11 @@ def main():
         num_of_pred = selected_option
         y_pred = forecasting(n_steps, n_features, x_input, model, 'day', num_of_pred)
         Forecasted = pd.DataFrame((y_pred * std) + mean)
-        st.dataframe(Forecasted)
         if graph_option=='line_chart':
             st.line_chart(Forecasted)
         elif graph_option=='area_chart':
             st.area_chart(Forecasted)
+        st.dataframe(Forecasted)
         # downloading files
         csv_data = Forecasted.to_csv(index=False)
         st.download_button(
