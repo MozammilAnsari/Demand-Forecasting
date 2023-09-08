@@ -88,7 +88,7 @@ def main():
 
         elif graph_option == 'area_chart':
             fig, ax = plt.subplots(figsize=(10, 6))
-            ax.fill_between(range(1, len(Forecasted) + 1), Forecasted, alpha=0.5)
+            ax.fill_between(range(1, len(Forecasted) + 1), Forecasted.reshape(len(Forecasted),), alpha=0.5)
             ax.set_xlabel("Day")
             ax.set_ylabel("Forecasted Value")
             ax.set_title("Demand Forecasting")
