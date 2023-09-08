@@ -79,14 +79,14 @@ def main():
             st.line_chart(Forecasted)
         elif graph_option=='area_chart':
             st.area_chart(Forecasted)
-    # downloading files
-    csv_data = Forecasted.to_csv(index=False)
-    st.download_button(
-        label="Download CSV",
-        data=csv_data,
-        file_name='sample_data.csv',
-        mime='text/csv',
-    )
+        # downloading files
+        csv_data = Forecasted.to_csv(index=False)
+        st.download_button(
+            label="Download CSV",
+            data=csv_data,
+            file_name='sample_data.csv',
+            mime='text/csv',
+        )
         
 
 
