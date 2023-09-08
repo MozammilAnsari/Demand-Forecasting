@@ -116,6 +116,7 @@ def main():
 
 
         st.set_option('deprecation.showPyplotGlobalUse', False)
+        showPyplotGlobalUse = false
         
 
 
