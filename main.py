@@ -112,7 +112,7 @@ def main():
             file_name='forecast_chart.png',
             mime='image/png',
         )
-        Forecast = pd.DataFrame(Forecasted, index=date_index)
+        Forecast = pd.DataFrame(Forecasted, index=pd.Index(name='Date', data=date_index),columns=['Sales'])
         st.dataframe(Forecast)
         # downloading files
         csv_data = Forecast.to_csv(index=False)
