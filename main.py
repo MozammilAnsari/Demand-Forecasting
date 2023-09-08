@@ -79,20 +79,20 @@ def main():
         y_pred = forecasting(n_steps, n_features, x_input, model, 'day', num_of_pred)
         Forecasted = pd.DataFrame((y_pred * std) + mean)
         if graph_option == 'line_chart':
-            plt.figure(figsize=(10, 6))
-            plt.plot(Forecasted)
-            plt.xlabel("Day")
-            plt.ylabel("Forecasted Value")
-            plt.title("Demand Forecasting")
-            st.pyplot()
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.plot(Forecasted)
+            ax.set_xlabel("Day")
+            plt.set_ylabel("Forecasted Value")
+            plt.set_title("Demand Forecasting")
+            st.pyplot(fig)
 
         elif graph_option == 'area_chart':
-            plt.figure(figsize=(10, 6))
-            plt.fill_between(range(1, len(Forecasted) + 1), Forecasted, alpha=0.5)
-            plt.xlabel("Day")
-            plt.ylabel("Forecasted Value")
-            plt.title("Demand Forecasting")
-            st.pyplot()
+            fig, ax = plt.subplots(figsize=(10, 6))
+            ax.fill_between(range(1, len(Forecasted) + 1), Forecasted, alpha=0.5)
+            ax.set_xlabel("Day")
+            ax.set_ylabel("Forecasted Value")
+            ax.set_title("Demand Forecasting")
+            st.pyplot(fig)
         # Create a download button for the chart image
         st.download_button(
             label="Download Chart",
