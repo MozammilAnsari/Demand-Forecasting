@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 import tensorflow 
 from tensorflow import keras
+import matplotlib.pyplot as plt
+from io import BytesIO
 data = pickle.load(open('original_df.pkl','rb'))
 model = tensorflow.keras.models.load_model('gru_original_data.h5')
 
@@ -75,10 +77,21 @@ def main():
         num_of_pred = selected_option
         y_pred = forecasting(n_steps, n_features, x_input, model, 'day', num_of_pred)
         Forecasted = pd.DataFrame((y_pred * std) + mean)
-        if graph_option=='line_chart':
-            st.line_chart(Forecasted)
-        elif graph_option=='area_chart':
-            st.area_chart(Forecasted)
+        if graph_option == 'line_chart':
+            plt.figure(figsize=(10, 6))
+            plt.plot(Forecasted)
+            plt.xlabel("Day")
+            plt.ylabel("Forecasted Value")
+            plt.title("Demand Forecasting")
+            st.pyplot()
+
+        elif graph_option == 'area_chart':
+            plt.figure(figsize=(10, 6))
+            plt.fill_between(range(1, len(Forecasted) + 1), Forecasted, alpha=0.5)
+            plt.xlabel("Day")
+            plt.ylabel("Forecasted Value")
+            plt.title("Demand Forecasting")
+            st.pyplot()
         st.dataframe(Forecasted)
         # downloading files
         csv_data = Forecasted.to_csv(index=False)
@@ -87,6 +100,18 @@ def main():
             data=csv_data,
             file_name='sample_data.csv',
             mime='text/csv',
+        )
+        # Save the chart as an image
+        chart_image = BytesIO()
+        plt.savefig(chart_image, format='png')
+        plt.close()
+
+        # Create a download button for the chart image
+        st.download_button(
+            label="Download Chart",
+            data=chart_image.getvalue(),
+            file_name='forecast_chart.png',
+            mime='image/png',
         )
         
 
