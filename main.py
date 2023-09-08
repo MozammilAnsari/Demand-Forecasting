@@ -77,7 +77,7 @@ def main():
         
         num_of_pred = selected_option
         y_pred = forecasting(n_steps, n_features, x_input, model, 'day', num_of_pred)
-        Forecasted = pd.DataFrame((y_pred * std) + mean)
+        Forecasted = (y_pred * std) + mean
         if graph_option == 'line_chart':
             fig, ax = plt.subplots(figsize=(10, 6))
             ax.plot(Forecasted)
@@ -104,7 +104,8 @@ def main():
             file_name='forecast_chart.png',
             mime='image/png',
         )
-        st.dataframe(Forecasted)
+        Forecast = pd.DataFrame(Forecasted)
+        st.dataframe(Forecast)
         # downloading files
         csv_data = Forecasted.to_csv(index=False)
         st.download_button(
