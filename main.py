@@ -107,7 +107,7 @@ def main():
         Forecast = pd.DataFrame(Forecasted)
         st.dataframe(Forecast)
         # downloading files
-        csv_data = Forecasted.to_csv(index=False)
+        csv_data = Forecast.to_csv(index=False)
         st.download_button(
             label="Download CSV",
             data=csv_data,
