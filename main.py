@@ -93,6 +93,10 @@ def main():
             ax.set_ylabel("Forecasted Value")
             ax.set_title("Demand Forecasting")
             st.pyplot(fig)
+        # Save the chart as an image
+        chart_image = BytesIO()
+        plt.savefig(chart_image, format='png')
+        plt.close()
         # Create a download button for the chart image
         st.download_button(
             label="Download Chart",
@@ -109,10 +113,6 @@ def main():
             file_name='sample_data.csv',
             mime='text/csv',
         )
-        # Save the chart as an image
-        chart_image = BytesIO()
-        plt.savefig(chart_image, format='png')
-        plt.close()
 
 
         st.set_option('deprecation.showPyplotGlobalUse', False)
