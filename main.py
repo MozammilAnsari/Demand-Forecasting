@@ -7,6 +7,8 @@ import tensorflow
 from tensorflow import keras
 import matplotlib.pyplot as plt
 from io import BytesIO
+import warnings
+warnings.filterwarnings("ignore")
 data = pickle.load(open('original_df.pkl','rb'))
 model = tensorflow.keras.models.load_model('gru_original_data.h5')
 
