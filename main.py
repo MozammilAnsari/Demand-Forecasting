@@ -82,8 +82,8 @@ def main():
             fig, ax = plt.subplots(figsize=(10, 6))
             ax.plot(Forecasted)
             ax.set_xlabel("Day")
-            plt.set_ylabel("Forecasted Value")
-            plt.set_title("Demand Forecasting")
+            ax.set_ylabel("Forecasted Value")
+            ax.set_title("Demand Forecasting")
             st.pyplot(fig)
 
         elif graph_option == 'area_chart':
