@@ -7,8 +7,7 @@ import tensorflow
 from tensorflow import keras
 import matplotlib.pyplot as plt
 from io import BytesIO
-import warnings
-warnings.filterwarnings("ignore")
+
 data = pickle.load(open('original_df.pkl','rb'))
 model = tensorflow.keras.models.load_model('gru_original_data.h5')
 
@@ -94,6 +93,13 @@ def main():
             plt.ylabel("Forecasted Value")
             plt.title("Demand Forecasting")
             st.pyplot()
+        # Create a download button for the chart image
+        st.download_button(
+            label="Download Chart",
+            data=chart_image.getvalue(),
+            file_name='forecast_chart.png',
+            mime='image/png',
+        )
         st.dataframe(Forecasted)
         # downloading files
         csv_data = Forecasted.to_csv(index=False)
@@ -108,13 +114,8 @@ def main():
         plt.savefig(chart_image, format='png')
         plt.close()
 
-        # Create a download button for the chart image
-        st.download_button(
-            label="Download Chart",
-            data=chart_image.getvalue(),
-            file_name='forecast_chart.png',
-            mime='image/png',
-        )
+
+        st.set_option('deprecation.showPyplotGlobalUse', False)
         
 
 
