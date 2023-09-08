@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import tensorflow 
 from tensorflow import keras
 data = pickle.load(open('original_df.pkl','rb'))
-model = pickle.load(open('lstm_original_data_model.pkl','rb'))
+model = tensorflow.keras.models.load_model('gru_original_data.h5')
 
 scl = StandardScaler()
 scaled_data = scl.fit_transform(data)
