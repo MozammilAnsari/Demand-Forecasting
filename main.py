@@ -68,30 +68,38 @@ def main():
     st.title('Demand Forecasting Model')
 
     # Create a selectbox widget
-    selected_option = st.selectbox("Select Number of Days:", range(1,365))
+    start_date = '2017-08-16'
+    st.write(f"Start Date: {start_date}")
+    date_option = st.selectbox("Select End date: ",(pd.date_range(start='2017-08-16', end='2018-08-16').date))
     graph_option = st.radio("Select Plot:", ['line_chart','area_chart'])
+
     # Create a submit button
     if st.button("Submit"):
-        # Do something when the button is clicked, e.g., display the selected option
-        st.write(f"Selected Number of Days: {selected_option}")
-        
-        num_of_pred = selected_option
+
+        end_date = date_option
+        date_index = pd.date_range(start=start_date, end=end_date).date
+        #num_of_pred = selected_option
+        num_of_pred = len(pd.date_range(start=start_date, end=end_date).date)
+        st.write(f"Number of Days Selected: {num_of_pred}")
         y_pred = forecasting(n_steps, n_features, x_input, model, 'day', num_of_pred)
         Forecasted = (y_pred * std) + mean
+
         if graph_option == 'line_chart':
-            fig, ax = plt.subplots(figsize=(10, 6))
-            ax.plot(Forecasted)
+            fig, ax = plt.subplots(figsize=(15, 10))
+            ax.plot(date_index,Forecasted)
             ax.set_xlabel("Day")
             ax.set_ylabel("Forecasted Value")
             ax.set_title("Demand Forecasting")
+            ax.tick_params(axis='x', rotation=15)
             st.pyplot(fig)
 
         elif graph_option == 'area_chart':
-            fig, ax = plt.subplots(figsize=(10, 6))
-            ax.fill_between(range(1, len(Forecasted) + 1), Forecasted.reshape(len(Forecasted),), alpha=0.5)
+            fig, ax = plt.subplots(figsize=(15, 10))
+            ax.fill_between(date_index, Forecasted.reshape(len(Forecasted),), alpha=0.5)
             ax.set_xlabel("Day")
             ax.set_ylabel("Forecasted Value")
             ax.set_title("Demand Forecasting")
+            ax.tick_params(axis='x', rotation=15)
             st.pyplot(fig)
         # Save the chart as an image
         chart_image = BytesIO()
@@ -104,7 +112,7 @@ def main():
             file_name='forecast_chart.png',
             mime='image/png',
         )
-        Forecast = pd.DataFrame(Forecasted)
+        Forecast = pd.DataFrame(Forecasted, index=date_index)
         st.dataframe(Forecast)
         # downloading files
         csv_data = Forecast.to_csv(index=False)
@@ -119,3 +127,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
